@@ -10,7 +10,10 @@ import { take } from 'rxjs';
 })
 export class HomeComponent implements OnInit {
   sensorData = new Map<number, any>()
+  sensorDataList: any[] = []
   dataTemperatura!: number[]
+  dataPresion!: number[]
+  dataVibracion!: number[]
 
   constructor(
     private gs: GlobalService,
@@ -25,10 +28,10 @@ export class HomeComponent implements OnInit {
     this.sensorDataService.findAllData()
     .pipe(take(1))
     .subscribe(data => {
-      data.forEach(e => {
-        this.sensorData.set(e.id, e)
-        this.updateDataLineal()
-      })
+      this.sensorDataList = data
+      this.updateDataLineal()
+
+      this.findLastDataLoop()
     })
   }
 
@@ -37,6 +40,7 @@ export class HomeComponent implements OnInit {
     .pipe(take(1))
     .subscribe(data => {
       this.sensorData.set(data.id, data)
+      this.sensorDataList.push(data)
     })
   }
 
@@ -44,16 +48,26 @@ export class HomeComponent implements OnInit {
     const interval = 5000
     const idIntervalo = setInterval(() => {
       this.findLastData()
+      this.updateDataLineal()
     }, interval);
   }
 
   updateDataLineal(){
-    const temp: number[] = []
-    this.sensorData.forEach(e => {
-      temp.push(e.temperatura)
-    })
-
-    this.dataTemperatura = temp
+    const aux: number[] = []
+    const auxP: number[] = []
+    const auxV: number[] = []
+    let temp = this.sensorDataList
+    if (temp.length > 10){
+      for (let index = 0; index < 10; index++) {
+        const element = temp[temp.length-10+index];
+        aux.push(element.temperatura)
+        auxP.push(element.presion)
+        auxV.push(element.vibracion)
+      }
+    }
+    this.dataTemperatura = aux
+    this.dataPresion = auxP
+    this.dataVibracion = auxV
 
     console.log("dataTemperatura", this.dataTemperatura)
   }

@@ -14,7 +14,7 @@ export class SensorDataService {
   ) { }
 
   findLastData(){
-    return this.http.get<any>(`${this.endpoint}/lastData`)
+    return this.http.get<any>(`${this.endpoint}/last`)
   }
 
   findAllData(){

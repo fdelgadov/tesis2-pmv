@@ -22,14 +22,15 @@ export class TemperaturaGraficoComponent implements OnChanges, OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if(changes["data"]){
+      console.log("ngOnChanges()")
       this.data = changes["data"].currentValue
-      this.lineChartData.datasets[0].data = this.data
-      this.lineChartData.labels = this.data.map(e => '')
+      this.loadChart()
     }
   }
 
   ngOnInit(): void {
     this.lineChartData = {
+      labels: [],
       datasets: [
         {
           data: this.data, // Datos para la línea
@@ -41,6 +42,13 @@ export class TemperaturaGraficoComponent implements OnChanges, OnInit {
         }
       ]
     }
+    this.loadChart()
+  }
+
+  loadChart(){
+    let labels = this.data.map(e => '')
+    this.lineChartData.labels = labels
+    this.lineChartData.datasets[0].data = this.data
     this.lineChartOptions = {
       responsive: true,
       plugins: {

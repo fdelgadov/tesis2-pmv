@@ -7,9 +7,17 @@
     />
   </div>
   <div class="chart-column">
-    <app-temperatura-grafico/>
+    <app-temperatura-grafico
+      [data]="dataPresion"
+      titulo="Presion"
+      unidad="hPA"
+    />
   </div>
   <div class="chart-column">
-    <app-temperatura-grafico/>
+    <app-temperatura-grafico
+      [data]="dataVibracion"
+      titulo="Vibracion"
+      unidad="g"
+    />
   </div>
 </div>
