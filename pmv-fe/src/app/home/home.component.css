@@ -1,0 +1,12 @@
+.chart-container {
+  display: flex;
+  justify-content: space-between; /* Distribuir el espacio entre las columnas */
+  gap: 20px; /* Espacio entre las columnas */
+  flex-wrap: wrap; /* Permitir que las columnas se ajusten en pantallas pequeñas */
+}
+
+.chart-column {
+  flex: 1; /* Cada columna ocupará el mismo espacio */
+  min-width: 300px; /* Ancho mínimo de las columnas */
+  max-width: 33%; /* Máximo ancho de las columnas en pantallas grandes */
+}
