@@ -29,4 +29,8 @@ public class SensorDataService {
     public List<SensorData> findAll(){
         return sdr.findAll();
     }
+
+    public SensorData save(SensorData o){
+        return sdr.save(o);
+    }
 }
