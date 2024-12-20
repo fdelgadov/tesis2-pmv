@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ChartData, ChartDataset, ChartOptions, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
@@ -7,7 +7,7 @@ import { BaseChartDirective } from 'ng2-charts';
   templateUrl: './temperatura-grafico.component.html',
   styleUrls: ['./temperatura-grafico.component.css']
 })
-export class TemperaturaGraficoComponent {
+export class TemperaturaGraficoComponent implements OnChanges {
   @Input() data!: number[]
 
   lineChartData: ChartData<'line'> = {
@@ -51,4 +51,10 @@ export class TemperaturaGraficoComponent {
 
   // Tipo de gráfico (línea)
   public lineChartType: ChartType = 'line';
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes["data"]){
+      this.lineChartData.datasets[0].data = changes["data"].currentValue
+    }
+  }
 }
